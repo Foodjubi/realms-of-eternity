@@ -1,25 +1,56 @@
 
-Installation information
-=======
+# Realms of Eternity
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+Un mod RPG solo pour Minecraft, créé par **Foodjubi**.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## Présentation
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+Realms of Eternity transforme Minecraft en une aventure RPG
+avec des compétences, des équipements, des quêtes et des
+dimensions fantastiques.
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+## État du développement
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+Version en préparation : 0.1.0
+
+Le mod n'est pas encore prêt à être utilisé en jeu.
+
+## Environnement de développement
+
+- Minecraft Java 26.3
+- NeoForge 26.3.0.103
+- Java 25
+- IntelliJ IDEA
+- Gradle 9.2.1
+
+## Compiler le projet
+
+Sous Windows :
+
+```powershell
+.\gradlew.bat build
+```
+
+## Lancer Minecraft en développement
+
+```powershell
+.\gradlew.bat runClient
+```
+
+## Méthode de développement
+
+Chaque fonctionnalité possède sa propre branche Git.
+
+Après les tests :
+1. Créer des commits cohérents.
+2. Envoyer la branche sur GitHub.
+3. Ouvrir une Pull Request.
+4. Fusionner dans main après validation.
+
+## Auteur
+
+Foodjubi
+
+## Licence
+
+À définir avant la publication sous licence open source.
