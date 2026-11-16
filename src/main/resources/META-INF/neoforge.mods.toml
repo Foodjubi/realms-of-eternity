@@ -24,6 +24,13 @@ Le projet est actuellement en développement.
 #[[accessTransformers]]
 #file="META-INF/accesstransformer.cfg"
 
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.${mod_id}]] #optional
     # the modid of the dependency
@@ -51,6 +58,8 @@ Le projet est actuellement en développement.
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+
+
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
