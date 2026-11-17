@@ -30,23 +30,56 @@ public final class RpgCommands {
                 .then(Commands.argument("amount", IntegerArgumentType.integer(1, 1000))
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
-
                             int amount = IntegerArgumentType.getInteger(ctx, "amount");
-
-                            int current = player.getData(RpgAttachments.MINING_XP);
-
-                            int total = (int) Math.min(
-                                    Integer.MAX_VALUE, (long) current + amount);
-
-                            player.setData(RpgAttachments.MINING_XP, total);
-
-                            ctx.getSource().sendSuccess(() -> Component.literal("Minage +" + amount + " XP ; total : " + total),false);
-
+                            int before = player.getData(RpgAttachments.MINING_XP);
+                            int oldLevel = SkillProgression.levelFromTotalXp(before);
+                            int after = SkillProgression.addXpSafely(before, amount);
+                            player.setData(RpgAttachments.MINING_XP, after);
+                            int gained = after - Math.max(0, before);
+                            int newLevel = SkillProgression.levelFromTotalXp(after);
+                            String bonus = newLevel > oldLevel ? " | Niveau " + oldLevel + " -> " + newLevel : "";
+                            String cap = gained < amount ? " (plafond atteint)" : "";
+                            ctx.getSource().sendSuccess(
+                                    () -> Component.literal("Minage +" + gained
+                                            + " XP | total " + after + bonus + cap), false);
+                            return 1;
+                        })
+                )
+        );event.getDispatcher().register(Commands.literal("roe_testcombatxp")
+                .then(Commands.argument("amount", IntegerArgumentType.integer(1, 1000))
+                        .executes(ctx -> {
+                            ServerPlayer player = ctx.getSource().getPlayerOrException();
+                            int amount = IntegerArgumentType.getInteger(ctx, "amount");
+                            int before = player.getData(RpgAttachments.COMBAT_XP);
+                            int oldLevel = SkillProgression.levelFromTotalXp(before);
+                            int after = SkillProgression.addXpSafely(before, amount);
+                            player.setData(RpgAttachments.COMBAT_XP, after);
+                            int gained = after - Math.max(0, before);
+                            int newLevel = SkillProgression.levelFromTotalXp(after);
+                            String bonus = newLevel > oldLevel ? " | Niveau " + oldLevel + " -> " + newLevel : "";
+                            String cap = gained < amount ? " (plafond atteint)" : "";
+                            ctx.getSource().sendSuccess(
+                                    () -> Component.literal("Combat +" + gained
+                                            + " XP | total " + after + bonus + cap), false);
                             return 1;
                         })
                 )
         );
 
+    }
+
+    private static String describeSkill(String label, int totalXp){
+
+        int level = SkillProgression.levelFromTotalXp(totalXp);
+
+        if(level == SkillProgression.MAX_LEVEL){
+            return label + " nev. 50 (MAX), XP total " + totalXp;
+        }
+
+        int progress = SkillProgression.xpInCurrentLevel(totalXp);
+        int needed = SkillProgression.xpForNextLevel(level);
+
+        return label + " niv. " + level + " (" + progress + "/" + needed + " XP), total : " + totalXp;
     }
 
 }
