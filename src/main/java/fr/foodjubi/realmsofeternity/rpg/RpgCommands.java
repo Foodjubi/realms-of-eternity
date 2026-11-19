@@ -72,7 +72,7 @@ public final class RpgCommands {
                 Commands.literal("roe_stats")
                         .executes(ctx -> {
                             ctx.getSource().getPlayerOrException();
-                            EnumMap<RpgStat, Double> stats = RpgStatCalculator.baseStat();
+                            EnumMap<RpgStat, Double> stats = RpgStatCalculator.baseStats();
                             ctx.getSource().sendSuccess( () -> Component.literal("=== Statistiques RPG (prototype) ==="), false);
                             for (RpgStatGroup group : RpgStatGroup.values()){
                                 String line = group.displayName() + " : " + RpgStatCalculator.describeGroup(stats, group);
@@ -81,6 +81,26 @@ public final class RpgCommands {
                             return 1;
                         })
         );
+        event.getDispatcher().register(
+                Commands.literal("roe_statdemo")
+                        .executes(ctx -> {
+                            ctx.getSource().getPlayerOrException();
+                            EnumMap<RpgStat, Double> base =
+                                    RpgStatCalculator.baseStats();
+                            EnumMap<RpgStat, Double> preview =
+                                    RpgStatCalculator.previewBonus(
+                                            base, RpgStat.STRENGTH, 5.0);
+                            String message = "Force de base : "
+                                    + base.get(RpgStat.STRENGTH)
+                                    + " | Aperçu +5 : "
+                                    + preview.get(RpgStat.STRENGTH)
+                                    + " | Base inchangée.";
+                            ctx.getSource().sendSuccess(
+                                    () -> Component.literal(message), false);
+                            return 1;
+                        })
+        );
+
 
     }
 

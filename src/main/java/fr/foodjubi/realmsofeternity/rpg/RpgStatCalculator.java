@@ -8,7 +8,7 @@ public final class RpgStatCalculator {
 
     private RpgStatCalculator(){}
 
-    public static EnumMap<RpgStat, Double> baseStat(){
+    public static EnumMap<RpgStat, Double> baseStats(){
 
         EnumMap<RpgStat, Double> stats = new EnumMap<>(RpgStat.class);
 
@@ -22,6 +22,20 @@ public final class RpgStatCalculator {
         }
 
         return stats;
+    }
+
+    public static EnumMap<RpgStat, Double> previewBonus(Map<RpgStat, Double> source, RpgStat target, double bonus){
+
+        EnumMap<RpgStat, Double> copy = new EnumMap<>(RpgStat.class);
+
+        for (RpgStat stat : RpgStat.values()){
+            copy.put(stat, source.getOrDefault(stat, 0.0));
+        }
+
+        copy.put(target, copy.get(target) + bonus);
+
+        return copy;
+
     }
 
     public static String describeGroup(Map<RpgStat, Double> stats, RpgStatGroup group){
