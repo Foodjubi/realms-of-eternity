@@ -6,6 +6,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
+import java.util.EnumMap;
+
 public final class RpgCommands {
 
     private RpgCommands() {}
@@ -45,7 +47,8 @@ public final class RpgCommands {
                             return 1;
                         })
                 )
-        );event.getDispatcher().register(Commands.literal("roe_testcombatxp")
+        )
+        ;event.getDispatcher().register(Commands.literal("roe_testcombatxp")
                 .then(Commands.argument("amount", IntegerArgumentType.integer(1, 1000))
                         .executes(ctx -> {
                             ServerPlayer player = ctx.getSource().getPlayerOrException();
@@ -64,6 +67,19 @@ public final class RpgCommands {
                             return 1;
                         })
                 )
+        );
+        event.getDispatcher().register(
+                Commands.literal("roe_stats")
+                        .executes(ctx -> {
+                            ctx.getSource().getPlayerOrException();
+                            EnumMap<RpgStat, Double> stats = RpgStatCalculator.baseStat();
+                            ctx.getSource().sendSuccess( () -> Component.literal("=== Statistiques RPG (prototype) ==="), false);
+                            for (RpgStatGroup group : RpgStatGroup.values()){
+                                String line = group.displayName() + " : " + RpgStatCalculator.describeGroup(stats, group);
+                                ctx.getSource().sendSuccess(() -> Component.literal(line), false);
+                            }
+                            return 1;
+                        })
         );
 
     }
