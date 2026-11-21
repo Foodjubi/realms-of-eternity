@@ -32,6 +32,14 @@ public final class RpgAttachments {
                     .copyOnDeath()
                     .build());
 
+    public static final Supplier<AttachmentType<Integer>> MANA =
+            TYPES.register("mana", () -> AttachmentType
+                    .builder(() -> 50)
+                    .serialize(Codec.INT.fieldOf("value"))
+                    .copyOnDeath()
+                    .build()
+            );
+
     public static void register(IEventBus modBus){
         TYPES.register(modBus);
     }
