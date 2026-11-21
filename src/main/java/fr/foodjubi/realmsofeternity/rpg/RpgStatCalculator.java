@@ -16,6 +16,7 @@ public final class RpgStatCalculator {
             double base = switch (stat){
                 case MAX_HEALTH -> 20.0;
                 case MAX_MANA -> 50.0;
+                case MANA_REGEN -> 1.0;
                 default -> 0.0;
             };
             stats.put(stat, base);
