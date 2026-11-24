@@ -100,6 +100,18 @@ public final class RpgCommands {
                             return 1;
                         })
         );
+        Commands.literal("roe_spendmana")
+                .then(Commands.argument(
+                                "amount", IntegerArgumentType.integer(1, 1000))
+                        .executes(ctx -> {
+                            ServerPlayer player =
+                                    ctx.getSource().getPlayerOrException();
+                            int amount = IntegerArgumentType.getInteger(
+                                    ctx, "amount");
+                            // Le corps complet est dans l'annexe.
+                            return 1;
+                        })
+                );
 
 
     }

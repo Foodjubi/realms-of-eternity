@@ -2,6 +2,7 @@ package fr.foodjubi.realmsofeternity;
 
 import fr.foodjubi.realmsofeternity.rpg.RpgAttachments;
 import fr.foodjubi.realmsofeternity.rpg.RpgCommands;
+import fr.foodjubi.realmsofeternity.rpg.RpgVitalCommands;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -40,6 +41,7 @@ public class RealmsOfEternity {
     public RealmsOfEternity(IEventBus modEventBus, ModContainer modContainer) {
         RpgAttachments.register(modEventBus);
         NeoForge.EVENT_BUS.addListener(RpgCommands::register);
+        NeoForge.EVENT_BUS.addListener(RpgVitalCommands::register);
     }
 
 }
