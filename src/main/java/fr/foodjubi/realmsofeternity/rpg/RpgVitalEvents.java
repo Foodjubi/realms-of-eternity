@@ -16,7 +16,7 @@ public final class RpgVitalEvents {
             return;
         }
 
-        RpgVitals.restoreMana(player, RpgVitals.regenerationPerSecond())
+        RpgVitals.restoreMana(player, RpgVitals.regenerationPerSecond());
     }
 
 }

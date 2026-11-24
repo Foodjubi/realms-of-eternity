@@ -78,8 +78,7 @@ public final class RpgVitalCommands {
         event.getDispatcher().register(
                 Commands.literal("roe_castheal")
                         .executes(ctx -> {
-                            ServerPlayer player =
-                                    ctx.getSource().getPlayerOrException();
+                            ServerPlayer player = ctx.getSource().getPlayerOrException();
                             if (player.getHealth() >= player.getMaxHealth()) {
                                 ctx.getSource().sendFailure(Component.literal(
                                         "Tes PV sont deja au maximum."));
@@ -99,6 +98,28 @@ public final class RpgVitalCommands {
                                             "Soin : +" + gained
                                                     + " PV | mana restant "
                                                     + remaining), false);
+                            return 1;
+                        })
+        );
+
+        event.getDispatcher().register(
+                Commands.literal("roe_castheal")
+                        .executes(ctx -> {
+                            ServerPlayer player = ctx.getSource().getPlayerOrException();
+                            if(player.getHealth() >= player.getMaxHealth()){
+                                ctx.getSource().sendFailure(Component.literal("Pv deja au max !"));
+                                return 0;
+                            }
+                            if(!RpgVitals.spendMana(player, 10)){
+                                ctx.getSource().sendFailure(Component.literal("Il faut 10 de mana pour lancer ce soin"));
+                                return 0;
+                            }
+
+                            float before = player.getHealth();
+                            player.heal(4.0F);
+                            float gained = player.getHealth() - before;
+                            int remaining = RpgVitals.mana(player);
+                            ctx.getSource().sendSuccess(() -> Component.literal("Soin : +" + gained + " PV | Mana restant " + remaining), false);
                             return 1;
                         })
         );
